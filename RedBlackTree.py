@@ -14,7 +14,10 @@ def put_recur(value: int, node: Node):
     if node is None:
         return Node(value, RED)
 
-    node.left = put_recur(value, node.left)
+    if value < node.value:
+        node.left = put_recur(value, node.left)
+    else:
+        node.right = put_recur(value, node.right)
     return node
 
 
