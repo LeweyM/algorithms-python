@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from RedBlackTree import RedBlackTree
+from RedBlackTree import RedBlackTree, BLACK, RED
 
 
 class TestTree(TestCase):
@@ -31,15 +31,20 @@ class TestNode(TestTree):
         self.tree.put(5)
         self.tree.put(6)
         self.tree.put(4)
+        self.tree.root.color = BLACK
+        self.tree.root.left.color = BLACK
+        self.tree.root.right.color = RED
         self.assertListEqual(self.tree.to_list(), [3, 1, 5, 4, 6])
-        #   3
-        # 1   5
-        #    4 6
+        #   3b
+        # 1b   5r
+        #     4 6
         self.tree.root = self.tree.root.left_rotate()
-        #     5
-        #   3   6
+        #     5b
+        #   3r   6
         #  1 4
         self.assertListEqual(self.tree.to_list(), [5, 3, 6, 1, 4])
+        self.assertEqual(self.tree.root.color, BLACK)
+        self.assertEqual(self.tree.root.left.color, RED)
 
     def test_right_rotate(self):
         self.tree.put(4)
@@ -56,3 +61,18 @@ class TestNode(TestTree):
         #  1     4
         #       3 6
         self.assertListEqual(self.tree.to_list(), [2, 1, 4, 3, 6])
+
+    def test_flip_colors(self):
+        self.tree.put(3)
+        self.tree.put(1)
+        self.tree.put(5)
+        self.tree.root.color = BLACK
+        self.assertTrue(self.tree.root.color == BLACK)
+        self.assertTrue(self.tree.root.left.color == RED)
+        self.assertTrue(self.tree.root.right.color == RED)
+
+        self.tree.root.flip_colors()
+
+        self.assertTrue(self.tree.root.color == RED)
+        self.assertTrue(self.tree.root.left.color == BLACK)
+        self.assertTrue(self.tree.root.right.color == BLACK)

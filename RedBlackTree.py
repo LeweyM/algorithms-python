@@ -10,18 +10,26 @@ class Node:
         self.color = color
 
     def left_rotate(self):
-        right_left = self.right.left
-        temp = self.right
-        self.right = right_left
-        temp.left = self
-        return temp
+        x = self.right
+        self.right = x.left
+        x.left = self
+        x.color = self.color
+        self.color = RED
+        return x
 
     def right_rotate(self):
-        left_right = self.left.right
-        temp = self.left
-        self.left = left_right
-        temp.right = self
-        return temp
+        x = self.left
+        self.left = x.right
+        x.right = self
+        return x
+
+    def flip_colors(self):
+        assert(self.color == BLACK)
+        assert(self.left.color == RED)
+        assert(self.right.color == RED)
+        self.color = RED
+        self.left.color = BLACK
+        self.right.color = BLACK
 
 
 class RedBlackTree:
