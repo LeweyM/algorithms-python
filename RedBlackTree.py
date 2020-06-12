@@ -9,6 +9,13 @@ class Node:
         self.value = value
         self.color = color
 
+    def left_rotate(self):
+        right_left = self.right.left
+        temp = self.right
+        self.right = right_left
+        temp.left = self
+        return temp
+
 
 class RedBlackTree:
     def __init__(self):
