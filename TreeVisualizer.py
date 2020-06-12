@@ -1,3 +1,5 @@
+import random
+
 import pygame
 import sys
 
@@ -18,6 +20,8 @@ RADIUS = 20
 
 
 def draw_tree(tree, screen):
+    if tree.root is None:
+        return
     vertical_spacing = HEIGHT // (tree.max_height() + 1)
     root_position = (HALF_WIDTH, vertical_spacing)
     draw_sub_tree(tree.root, root_position, 1, vertical_spacing, screen)
@@ -58,6 +62,9 @@ def render(tree: RedBlackTree):
 
         draw_tree(tree, screen)
 
+        pygame.time.delay(1000)
+        tree.put(random.randint(0, 100))
+
         pygame.display.flip()
 
 
@@ -77,13 +84,4 @@ def text_from_node(value, position):
 
 if __name__ == '__main__':
     red_black_tree = RedBlackTree()
-    red_black_tree.put(5)
-    red_black_tree.put(2)
-    red_black_tree.put(1)
-    red_black_tree.put(4)
-    red_black_tree.put(7)
-    red_black_tree.put(2)
-    red_black_tree.put(6)
-    red_black_tree.put(9)
-    red_black_tree.put(11)
     render(red_black_tree)
