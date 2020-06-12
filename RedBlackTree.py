@@ -26,12 +26,15 @@ class Node:
         return x
 
     def flip_colors(self):
-        assert(self.color == BLACK)
         assert(self.left.color == RED)
         assert(self.right.color == RED)
         self.color = RED
         self.left.color = BLACK
         self.right.color = BLACK
+
+
+def is_red(node):
+    return node is not None and node.color == RED
 
 
 class RedBlackTree:
@@ -40,6 +43,8 @@ class RedBlackTree:
         self.longest_height = 0
 
     def put(self, value: int):
+        if self.root is None:
+            self.root = Node(value, BLACK)
         self.root = self.put_recur(value, self.root, 1)
 
     def put_recur(self, value: int, node: Node, height):
@@ -50,6 +55,14 @@ class RedBlackTree:
             node.left = self.put_recur(value, node.left, height + 1)
         else:
             node.right = self.put_recur(value, node.right, height + 1)
+
+        if not is_red(node.left) and is_red(node.right):
+            node = node.left_rotate()
+        if is_red(node.left) and node.left is not None and is_red(node.left.left):
+            node = node.right_rotate()
+        if is_red(node.left) and is_red(node.right):
+            node.flip_colors()
+
         return node
 
     def max_height(self):
