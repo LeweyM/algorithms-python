@@ -52,6 +52,9 @@ class TestNode(TestTree):
         self.tree.put(6)
         self.tree.put(1)
         self.tree.put(3)
+        self.tree.root.color = BLACK
+        self.tree.root.left.color = RED
+        self.tree.root.right.color = BLACK
         self.assertListEqual(self.tree.to_list(), [4, 2, 6, 1, 3])
         #     4
         #  2     6
@@ -61,6 +64,8 @@ class TestNode(TestTree):
         #  1     4
         #       3 6
         self.assertListEqual(self.tree.to_list(), [2, 1, 4, 3, 6])
+        self.assertEqual(self.tree.root.color, BLACK)
+        self.assertEqual(self.tree.root.right.color, RED)
 
     def test_flip_colors(self):
         self.tree.put(3)

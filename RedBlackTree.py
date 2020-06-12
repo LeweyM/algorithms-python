@@ -21,6 +21,8 @@ class Node:
         x = self.left
         self.left = x.right
         x.right = self
+        x.color = self.color
+        self.color = RED
         return x
 
     def flip_colors(self):
