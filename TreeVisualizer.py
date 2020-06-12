@@ -11,6 +11,7 @@ WIDTH = 600
 HALF_WIDTH = WIDTH // 2
 HALF_HEIGHT = HEIGHT // 2
 
+RED = pygame.Color("red")
 WHITE = pygame.Color("white")
 BLUE = pygame.Color("blue")
 CENTER = (HALF_WIDTH, HALF_HEIGHT)
@@ -30,13 +31,14 @@ def draw_tree(tree, screen):
 def draw_sub_tree(root, position, height, vertical_spacing, screen):
     horizontal_spacing = get_horizontal_spacing(height)
     x, y = position
+    line_color = RED if root.color == 1 else WHITE
     if root.left is not None:
         left_position = (x - horizontal_spacing, (height+1)*vertical_spacing)
-        pygame.draw.line(screen, WHITE, position, left_position, 2)
+        pygame.draw.line(screen, line_color, position, left_position, 2)
         draw_sub_tree(root.left, left_position, height + 1, vertical_spacing, screen)
     if root.right is not None:
         right_position = (x + horizontal_spacing, (height+1)*vertical_spacing)
-        pygame.draw.line(screen, WHITE, position, right_position, 2)
+        pygame.draw.line(screen, line_color, position, right_position, 2)
         draw_sub_tree(root.right, right_position, height + 1, vertical_spacing, screen)
     draw_circle(screen, root, position)
 
