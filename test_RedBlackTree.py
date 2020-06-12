@@ -40,3 +40,19 @@ class TestNode(TestTree):
         #   3   6
         #  1 4
         self.assertListEqual(self.tree.to_list(), [5, 3, 6, 1, 4])
+
+    def test_right_rotate(self):
+        self.tree.put(4)
+        self.tree.put(2)
+        self.tree.put(6)
+        self.tree.put(1)
+        self.tree.put(3)
+        self.assertListEqual(self.tree.to_list(), [4, 2, 6, 1, 3])
+        #     4
+        #  2     6
+        # 1 3
+        self.tree.root = self.tree.root.right_rotate()
+        #     2
+        #  1     4
+        #       3 6
+        self.assertListEqual(self.tree.to_list(), [2, 1, 4, 3, 6])

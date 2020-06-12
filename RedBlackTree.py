@@ -16,6 +16,13 @@ class Node:
         temp.left = self
         return temp
 
+    def right_rotate(self):
+        left_right = self.left.right
+        temp = self.left
+        self.left = left_right
+        temp.right = self
+        return temp
+
 
 class RedBlackTree:
     def __init__(self):
