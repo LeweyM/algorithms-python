@@ -10,23 +10,26 @@ class Node:
         self.color = color
 
 
-def put_recur(value: int, node: Node):
-    if node is None:
-        return Node(value, RED)
-
-    if value < node.value:
-        node.left = put_recur(value, node.left)
-    else:
-        node.right = put_recur(value, node.right)
-    return node
-
-
 class RedBlackTree:
     def __init__(self):
         self.root = None
+        self.longest_height = 0
 
     def put(self, value: int):
-        self.root = put_recur(value, self.root)
+        self.root = self.put_recur(value, self.root, 1)
+
+    def put_recur(self, value: int, node: Node, height):
+        if node is None:
+            self.longest_height = max(self.longest_height, height)
+            return Node(value, RED)
+        if value < node.value:
+            node.left = self.put_recur(value, node.left, height + 1)
+        else:
+            node.right = self.put_recur(value, node.right, height + 1)
+        return node
+
+    def max_height(self):
+        return self.longest_height
 
     def to_list(self):
         queue = []

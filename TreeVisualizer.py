@@ -18,20 +18,22 @@ RADIUS = 20
 
 
 def draw_tree(tree, screen):
-    draw_sub_tree(tree.root, (HALF_WIDTH, 100), 1, screen)
+    vertical_spacing = HEIGHT // (tree.max_height() + 1)
+    root_position = (HALF_WIDTH, vertical_spacing)
+    draw_sub_tree(tree.root, root_position, 1, vertical_spacing, screen)
 
 
-def draw_sub_tree(root, position, height, screen):
+def draw_sub_tree(root, position, height, vertical_spacing, screen):
     horizontal_spacing = get_horizontal_spacing(height)
     x, y = position
     if root.left is not None:
-        left_position = (x - horizontal_spacing, y + VERTICAL_SPACING)
+        left_position = (x - horizontal_spacing, (height+1)*vertical_spacing)
         pygame.draw.line(screen, WHITE, position, left_position, 2)
-        draw_sub_tree(root.left, left_position, height + 1, screen)
+        draw_sub_tree(root.left, left_position, height + 1, vertical_spacing, screen)
     if root.right is not None:
-        right_position = (x + horizontal_spacing, y + VERTICAL_SPACING)
+        right_position = (x + horizontal_spacing, (height+1)*vertical_spacing)
         pygame.draw.line(screen, WHITE, position, right_position, 2)
-        draw_sub_tree(root.right, right_position, height + 1, screen)
+        draw_sub_tree(root.right, right_position, height + 1, vertical_spacing, screen)
     draw_circle(screen, root, position)
 
 
